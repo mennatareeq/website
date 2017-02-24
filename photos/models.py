@@ -6,9 +6,11 @@ from django.db import models
 
 
 class Photo(models.Model):
-    name = models.CharField(max_length=255)
-    photo = models.ImageField(upload_to= '/media/photos')
+    name        =   models.CharField(max_length=255)
+    photo       =   models.ImageField(upload_to= '/home/asmaanabil/website/photos/media/photos/')
+    features    =   models.FileField(blank = True , upload_to= '/home/asmaanabil/website/photos/media/features/')
+
+    def __str__(self):
+        return self.name
 
 
-#class Feature(models.Model):
-#    photo = models.ForeignKey(Photo, on_delete=models.CASCADE)
