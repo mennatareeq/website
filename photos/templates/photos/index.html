@@ -1,14 +1,16 @@
 {% extends 'photos/base.html' %}
 
 {% block some_page_contents %}
-
-    {%  for photo in object_list %}
-        <div>
+<div class="container">
+    <div class="row">
+        {%  for photo in object_list %}
+        <div class="col-sm-4" >
             <a href="{% url 'photos:test' photo.id %}" >
-                <img src="{{ PHOTOS_URL }}media/photos/{{ photo.name }}" />
+                <img src="{{ PHOTOS_URL }}media/photos/{{ photo.name }}" class="img-responsive"/>
             </a>
         </div>
-    {% endfor %}
-
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
 
