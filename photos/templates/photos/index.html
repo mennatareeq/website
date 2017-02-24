@@ -4,7 +4,9 @@
 
     {%  for photo in object_list %}
         <div>
-            <img src="{{ PHOTOS_URL }}media/photos/{{ photo.name }}" />
+            <a href="{% url 'photos:test' photo.id %}" >
+                <img src="{{ PHOTOS_URL }}media/photos/{{ photo.name }}" />
+            </a>
         </div>
     {% endfor %}
 
