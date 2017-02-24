@@ -7,8 +7,11 @@ from django.db import models
 
 class Photo(models.Model):
     name        =   models.CharField(max_length=255)
-    photo       =   models.ImageField(upload_to= '/home/asmaanabil/github/website/photos/media/photos/')
-    features    =   models.FileField(blank = True , upload_to= '/home/asmaanabil/github/website/photos/media/features/')
+    #photo       =   models.ImageField(upload_to= '/home/asmaanabil/github/website/photos/media/photos/')
+    photo = models.ImageField(upload_to='./photos/media/photos/')
+    #features    =   models.FileField(blank = True , upload_to= '/home/asmaanabil/github/website/photos/media/features/')
+    features    =   models.FileField(blank = True , upload_to= './photos/media/features/')
+
 
     def __str__(self):
         return self.name
