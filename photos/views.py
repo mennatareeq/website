@@ -17,15 +17,18 @@ class IndexView(generic.ListView):
 	def get_queryset(self):
 		list_of_lists=[]
 		objects_5=[]
-		i=0
 		for photo in Photo.objects.all():
-			if i<4 :
+			if len(objects_5)<5 :
 				objects_5.append(photo)
-				i=i+1
 			else:
-				i=0
 				list_of_lists.append(objects_5)
-				del objects_5[:]
+				objects_5=[]
+				objects_5.append(photo)
+		if(len(objects_5)<5):
+			list_of_lists.append(objects_5)
+		print len(list_of_lists)
+		for list in list_of_lists:
+			print len(list)
 		return list_of_lists
 
 
