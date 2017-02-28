@@ -6,7 +6,7 @@ app_name = 'photos'
 
 urlpatterns = [
 	# /photos/
-	url(r'^$', views.IndexView.as_view()   , name='index'),
+	url(r'^$', views.index   , name='index'),
 
 	# /photos/<photo_id>
 	url(r'^(?P<pk>[0-9]+)$', views.Test.as_view(),  name='test'),

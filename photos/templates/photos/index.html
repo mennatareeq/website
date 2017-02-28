@@ -1,16 +1,22 @@
 {% extends 'photos/base.html' %}
 
 {% block some_page_contents %}
-<div class="container">
-    <div class="row">
-        {%  for photo in object_list %}
-        <div class="col-sm-4" >
-            <a href="{% url 'photos:test' photo.id %}" >
-                <img src="{{ PHOTOS_URL }}media/photos/{{ photo.name }}" class="img-responsive"/>
-            </a>
-        </div>
-        {% endfor %}
-    </div>
-</div>
+<table style="width:100%">
+    {%  for list_5 in list_of_lists %}
+    <h1>test</h1>
+    <tr>
+        {% for photo in list_5 %}
+            <td>
+                    <a href="{% url 'photos:test' photo.id %}" ></a>
+                    <img class="card-img-top" src="{{ PHOTOS_URL }}media/photos/{{ photo.name }}" alt="Card image cap"/>
+                    <div class="card-block">
+                        <h4 class="card-title">Card title</h4>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </td>
+        {%endfor%}
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}
-
