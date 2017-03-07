@@ -50,8 +50,8 @@ def extract_features(list_images):
 		output.close()
 
 class Test(generic.DetailView):
-	features = extract_features(list_images)
-	print features
+	#features = extract_features(list_images)
+	#print features
 	model = Photo
 	template_name='photos/test.html'
 

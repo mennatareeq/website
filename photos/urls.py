@@ -10,4 +10,7 @@ urlpatterns = [
 
 	# /photos/<photo_id>
 	url(r'^(?P<pk>[0-9]+)$', views.Test.as_view(),  name='test'),
+
+	#/photos/result
+
 ]
