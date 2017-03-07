@@ -1,22 +1,27 @@
 import os
-from photos.models import Photo
+from photos.models import Photo, ImageClass
 from django.core.files import File
 
-directory = '/home/manar/Downloads/Coverup/'
+images_directory = '/home/manar/Downloads/mini-dataset'
+features_directory = '/home/manar/Downloads/mini-dataset2'
 
-images = []
-files = []
-for filename in os.listdir(directory):
-    if filename.endswith(".jpg"):
-        images.append(filename)
-    elif filename.endswith(".txt"):
-        files.append(filename)
+for root, dirs, files in os.walk(images_directory):
 
-images.sort()
-files.sort()
-number=len(images)
-for i in range(number):
-    ph = Photo()
-    ph.name = images[i]
-    ph.photo.save(images[i], File(open(directory+images[i], 'r')))
-    ph.features.save(files[i], File(open(directory+files[i], 'r')))
+    for direcory in dirs:
+        image_class = ImageClass()
+        image_class.class_name=direcory
+
+        images_dir= images_directory+'/'+direcory
+        if os.listdir(images_dir):
+            image_class.save()
+            print 'class ' + direcory + ' is added to database'
+            for filee in os.listdir(images_dir):
+                if filee.endswith('.jpg'):
+                    ph = Photo()
+                    ph.name = filee
+                    ph.class_name=image_class
+                    ph.photo.save(filee, File(open(images_dir+'/' + filee, 'r')))
+                    feature_file_dir= features_directory+'/'+direcory+'/'+filee+'.txt'
+                    ph.features.save(filee, File(open(feature_file_dir, 'r')))
+                    ph.save()
+
