@@ -1,7 +1,7 @@
 from django.views import generic
 from django.shortcuts import render
 from django.views.generic.edit import CreateView , UpdateView , DeleteView
-from models import Photo
+from models import Photo , ImageClass
 from django.http import HttpResponse
 import numpy as np
 import tensorflow as tf
@@ -12,11 +12,10 @@ import re
 from tensorflow.python.platform import gfile
 import csv
 
-images_dir = '/home/manar/Desktop/test2/'
-modelFullPath = '/home/manar/Downloads/inception-2015-12-05/classify_image_graph_def.pb'
-indexpath = '/home/manar/Desktop/featureswaleed.csv'
+images_dir = '/home/asmaanabil/Desktop/test2/'
+modelFullPath = '/home/asmaanabil/Downloads/inception-2015-12-05/classify_image_graph_def.pb'
+indexpath = '/home/asmaanabil/Desktop/featureswaleed.csv'
 list_images = [images_dir + f for f in os.listdir(images_dir) if re.search('jpg|JPG', f)]
-
 def create_graph():
 	"""Creates a graph from saved GraphDef file and returns a saver."""
 	# Creates graph from saved graph_def.pb.
@@ -24,8 +23,6 @@ def create_graph():
 		graph_def = tf.GraphDef()
 		graph_def.ParseFromString(f.read())
 		_ = tf.import_graph_def(graph_def, name='')
-
-
 def extract_features(list_images):
 	nb_features = 2048
 	features = np.empty((len(list_images), nb_features))
@@ -55,8 +52,6 @@ class Test(generic.DetailView):
 	model = Photo
 	template_name='photos/test.html'
 
-
-
 def index(request):
 	list_of_lists=[]
 	objects_5=[]
@@ -74,7 +69,13 @@ def index(request):
 		print len(list)
 	return render(request,'photos/index.html',{'list_of_lists':list_of_lists})
 
-
-
-
-
+def search(request):
+	temp_class = ImageClass()
+	req_class = temp_class.photo_set.all()
+	if request.method == "POST":
+		input_text = request.POST.get("input")
+		for image_class in ImageClass.objects.all():
+			if image_class.class_name == input_text.lower() :
+				req_class = image_class.photo_set.all()
+				break
+	return render(request, 'photos/search.html' , {'input_text' : input_text , 'req_class':req_class })

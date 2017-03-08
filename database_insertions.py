@@ -2,14 +2,14 @@ import os
 from photos.models import Photo, ImageClass
 from django.core.files import File
 
-images_directory = '/home/manar/Downloads/mini-dataset'
-features_directory = '/home/manar/Downloads/mini-dataset2'
+images_directory = '/home/asmaanabil/Downloads/mini-dataset'
+features_directory = '/home/asmaanabil/Downloads/mini-dataset2'
 
 for root, dirs, files in os.walk(images_directory):
 
     for direcory in dirs:
         image_class = ImageClass()
-        image_class.class_name=direcory
+        image_class.class_name=direcory.lower()
 
         images_dir= images_directory+'/'+direcory
         if os.listdir(images_dir):
