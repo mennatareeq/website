@@ -2,7 +2,7 @@
 
 {% block some_page_contents %}
 <table class="table table-bordered t" align="center" style=" background-color:#FFFAF0; hight:100%">
-    {% for image in req_class %}
+    {% for image in related_images %}
         <div class="pin">
             <td style="padding: 10px ">
                 <a href="{% url 'photos:test' image.id %}" >

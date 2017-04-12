@@ -12,10 +12,10 @@ import re
 from tensorflow.python.platform import gfile
 import csv
 
-images_dir = '/home/asmaanabil/Desktop/test2/'
+'''images_dir = '/home/asmaanabil/Desktop/test2/'
 modelFullPath = '/home/asmaanabil/Downloads/inception-2015-12-05/classify_image_graph_def.pb'
 indexpath = '/home/asmaanabil/Desktop/featureswaleed.csv'
-list_images = [images_dir + f for f in os.listdir(images_dir) if re.search('jpg|JPG', f)]
+list_images = [images_dir + f for f in os.listdir(images_dir) if re.search('jpg|JPG', f)]'''
 def create_graph():
 	"""Creates a graph from saved GraphDef file and returns a saver."""
 	# Creates graph from saved graph_def.pb.
@@ -46,9 +46,9 @@ def extract_features(list_images):
 		return features
 		output.close()
 
+
+
 class Test(generic.DetailView):
-	#features = extract_features(list_images)
-	#print features
 	model = Photo
 	template_name='photos/test.html'
 
@@ -70,12 +70,13 @@ def index(request):
 	return render(request,'photos/index.html',{'list_of_lists':list_of_lists})
 
 def search(request):
-	temp_class = ImageClass()
-	req_class = temp_class.photo_set.all()
+	related_images = ImageClass().photo_set.all()
+	input_text = ""
 	if request.method == "POST":
 		input_text = request.POST.get("input")
+		print(input_text)
 		for image_class in ImageClass.objects.all():
 			if image_class.class_name == input_text.lower() :
-				req_class = image_class.photo_set.all()
+				related_images = image_class.photo_set.all()
 				break
-	return render(request, 'photos/search.html' , {'input_text' : input_text , 'req_class':req_class })
+	return render(request, 'photos/search.html' , {'input_text' : input_text , 'related_images':related_images })

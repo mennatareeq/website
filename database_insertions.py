@@ -2,8 +2,8 @@ import os
 from photos.models import Photo, ImageClass
 from django.core.files import File
 
-images_directory = '/home/asmaanabil/Downloads/mini-dataset'
-features_directory = '/home/asmaanabil/Downloads/mini-dataset2'
+images_directory = '/home/asmaanabil/Desktop/gp/mini-dataset'
+features_directory = '/home/asmaanabil/Desktop/gp/mini-dataset2'
 
 for root, dirs, files in os.walk(images_directory):
 
