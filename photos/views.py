@@ -56,22 +56,9 @@ class Test(generic.DetailView):
 	model = Photo
 	template_name='photos/test.html'
 
-def index(request):
-	list_of_lists=[]
-	objects_5=[]
-	for photo in Photo.objects.all():
-		if len(objects_5)<5 :
-			objects_5.append(photo)
-		else:
-			list_of_lists.append(objects_5)
-			objects_5=[]
-			objects_5.append(photo)
-	if(len(objects_5)<5):
-		list_of_lists.append(objects_5)
-	print len(list_of_lists)
-	for list in list_of_lists:
-		print len(list)
-	return render(request,'photos/index.html',{'list_of_lists':list_of_lists})
+class Index(generic.ListView):
+	model=Photo
+	template_name='photos/index.html'
 
 def search(request):
 	related_images = ImageClass().photo_set.all()
@@ -84,52 +71,6 @@ def search(request):
 				break
 	return render(request, 'photos/search.html' , {'input_text' : input_text , 'related_images':related_images })
 
-'''class UserFormView(View):
-	form_class = UserForm
-	template_name = 'photos/registration_form.html'
-
-	# display blank form
-	def get(self , request):
-		form = self.form_class(None)
-		return render(request , self.template_name , {'form':form})
-
-	# process form data
-	def post(self , request):
-		form = self.form_class(request.POST)
-
-		if form.is_valid():
-			user = form.save(commit=False) #create an object from the form but not save
-
-			#cleaned normalized data
-			username = form.cleaned_data['username']
-			password = form.cleaned_data['password']
-			user.set_password(password)
-			user.save()
-
-			# return user objects if credentials are correct
-			user = authenticate(username=username , password=password)
-
-			if user is not None:
-				if user.is_active:
-					login(request,user)
-					return redirect('photos:index')
-
-		return render(request, self.template_name, {'form': form})'''
-
-'''def register(request):
-	return render(request ,  'photos/registration_form.html' )
-
-def signup(request):
-	#new_user = UserAccount()
-    user = User()
-    if request.method == "POST":
-        user = User.objects.create_user( request.POST.get("username"), irequest.POST.get("email"), request.POST.get("password"))
-		#new_user.username = request.POST.get("username")
-		#new_user.password = request.POST.get("password")
-		#new_user.email = irequest.POST.get("email")
-		#new_user.save()
-
-	return render(request , 'photos/index.html' )'''
 
 
 

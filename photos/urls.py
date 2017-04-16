@@ -7,7 +7,7 @@ app_name = 'photos'
 
 urlpatterns = [
 	# /photos/
-	url(r'^$', views.index , name='index'),
+	url(r'^$', views.Index.as_view() , name='index'),
 
 	# /photos/register/
 	#url(r'^register/$', views.register , name='register'),
@@ -16,7 +16,7 @@ urlpatterns = [
 	url(r'^(?P<pk>[0-9]+)$', views.Test.as_view(),  name='test'),
 
 	#/photos/<class_id>
-	url(r'^/$', views.search , name='search'),
+	url(r'^$', views.search , name='search'),
 
 	# /photos/
 	#url(r'^$', views.signup , name='signup'),
