@@ -27,10 +27,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# provide our get_profile()
+AUTH_PROFILE_MODULE = 'user_account.UserAccount'
+
 
 # Application definition
-
 INSTALLED_APPS = [
+    'users.apps.UsersConfig' ,
     'photos.apps.PhotosConfig',
     'django.contrib.admin',
     'django.contrib.auth',
