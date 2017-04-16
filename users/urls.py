@@ -7,5 +7,13 @@ app_name = 'users'
 
 urlpatterns = [
     url(r'^register/' , views.UserRegistration , name='register'),
-    url(r'^login/' , views.loginrequest , name='login')
+    url(r'^login/' , views.LoginRequest , name='login'),
+    url(r'^logout/' , views.LogoutRequest , name='logout'),
+
+
+
+
 ]
+
+
+

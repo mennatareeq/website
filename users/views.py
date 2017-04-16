@@ -1,16 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
-from users.forms import RegistrationForm,LogInForm
+from users.forms import RegistrationForm , LoginForm
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login
 from users.models import UserAccount
-from django.core.urlresolvers import reverse
-
+from django.contrib.auth import authenticate , login , logout
 
 def UserRegistration(request):
     if request.user.is_authenticated():
-        return HttpResponseRedirect('/profile/')
+        return HttpResponseRedirect('/photos/')
     elif request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -23,7 +21,7 @@ def UserRegistration(request):
                                        email=form.cleaned_data['email'],
                                        password=form.cleaned_data['password'])
             user_account.save()
-            return HttpResponseRedirect('photos:index')
+            return HttpResponseRedirect('/photos/' , {'form' : form})
         else:
             return render(request , 'register.html' , {'form': form})
     else:
@@ -31,24 +29,28 @@ def UserRegistration(request):
         form = RegistrationForm()
         return render(request,'register.html', {'form' : form})
 
-def loginrequest(request):
+def LoginRequest(request):
     if request.user.is_authenticated():
-        return HttpResponseRedirect('photos:index')
-    if request.method=="POST":
-        form=LogInForm(request.POST)
+        return HttpResponseRedirect('/photos/')
+    elif request.method == 'POST':
+        form = LoginForm(request.POST)
         if form.is_valid():
-            username= form.cleaned_data['username']
-            password=form.cleaned_data['password']
-            user=authenticate(username=username,password=password)
-            if user is not None:
-                login(request,user)
-                return HttpResponseRedirect(reverse('photos:index'))
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user_account = authenticate(username=username , password=password)
+            if user_account is not None:
+                login(request,user_account)
+                return HttpResponseRedirect('/photos/')
             else:
-                return render(request, 'login.html', {'form': form})
+                return HttpResponseRedirect('/users/login/' , {'form': form})
         else:
-            return render(request,'login.html',{'form':form})
+            return render(request, 'login.html', {'form': form})
     else:
-        '''user is not submitting form, show the login form'''
-        form = LogInForm()
-        context={'form':form}
-        return render(request,'login.html',context)
+        '''user is'nt submitting the form, show them a blank registration form'''
+        form = LoginForm()
+        return render(request,'login.html', {'form' : form})
+
+
+def LogoutRequest(request):
+    logout(request)
+    return HttpResponseRedirect('/photos/')
