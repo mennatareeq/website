@@ -14,6 +14,7 @@ class Photo(models.Model):
     name = models.CharField(max_length=255)
     photo = models.ImageField(upload_to='./photos/media/photos/')
     features = models.FileField(blank = True , upload_to= './photos/media/features/')
+    price = models.DecimalField(max_digits=10, decimal_places=2,default = 100)
 
     def __str__(self):
         return self.name

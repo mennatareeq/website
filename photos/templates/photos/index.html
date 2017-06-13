@@ -6,14 +6,21 @@
 <div class="container">
 <ul>
         <!--div class="row"-->
-            {%  for photo in object_list %}
+            {%  for photo in photos %}
             <!--div class="col-sm-4" -->
                 <li style="display: inline">
                     <div id="wrapper">
                         <div id="columns">
                             <div class="pin">
                                 <a href="{% url 'photos:test' photo.id %}" >
-                                     <img src="{{ PHOTOS_URL }}media/photos/{{ photo.name }}" class="img-responsive" style="float: left;"/>
+                                    <img src="{{ PHOTOS_URL }}media/photos/{{ photo.name }}" class="img-responsive" style="float: left;"/>
+
+                                    <form action="{% url 'cart:cart_add' photo.id %}" method="post">
+                                      {{ cart_product_form }}
+                                      {% csrf_token %}
+                                      <input type="submit" value="Add to cart">
+                                    </form>
+
                                 </a>
                             </div>
                         </div>

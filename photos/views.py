@@ -14,6 +14,7 @@ import csv
 from django.contrib.auth import authenticate , login
 from django.views.generic import View
 from django.contrib.auth.models import User
+from cart.forms import CartAddProductForm
 
 
 '''images_dir = '/home/asmaanabil/Desktop/test2/'
@@ -56,9 +57,11 @@ class Test(generic.DetailView):
 	model = Photo
 	template_name='photos/test.html'
 
-class Index(generic.ListView):
-	model=Photo
-	template_name='photos/index.html'
+def Index(request):
+	photos=Photo.objects.all()
+	cart_product_form = CartAddProductForm()
+	return render(request,'photos/index.html',{'photos':photos,'cart_product_form': cart_product_form})
+
 
 def search(request):
 	related_images = ImageClass().photo_set.all()
