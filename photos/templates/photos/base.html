@@ -63,7 +63,7 @@
                         ${{ cart.get_total_price }}
                       </a>
                     {% else %}
-                      Your cart is empty.
+                       <font color="red">Your cart is empty.</font>
                     {% endif %}
                   {% endwith %}
                 </div>
@@ -71,11 +71,16 @@
 
             </div>
 
-            <div class="navbar-form navbar-right">
-                {% if user.is_authenticated %}<p style="color:white;">{{ user.username }}</p>
-                {% else %}<p><a href="/users/register/">Signup</a></p>
+            <div class="navbar-form navbar-left">
+                {% if user.is_authenticated %} <p><a href="/upload/">Upload</a></p>
+                {% else %}<p><a href="/users/register/">Upload</a></p>
                 {% endif %}
             </div>
+
+            <div class="navbar-form navbar-right">
+                <p><a href="/users/register/">Signup</a></p>
+            </div>
+
         </div>
 
     </div>

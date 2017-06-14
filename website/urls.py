@@ -8,9 +8,11 @@ urlpatterns = [
 	url(r'^cart/', include('cart.urls', namespace='cart')),
 	url(r'^photos/' , include('photos.urls',namespace='photos')),
 	url(r'^orders/', include('orders.urls', namespace='orders')),
+	url(r'^upload/', include('upload.urls', namespace='upload')),
 	url(r'^users/' , include('users.urls')),
 ]
 
 if settings.DEBUG:
 	urlpatterns += static(settings.STATIC_URL , document_root = settings.STATIC_ROOT)
 	urlpatterns += static(settings.PHOTOS_URL, document_root=settings.PHOTOS_ROOT)
+	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
