@@ -9,16 +9,13 @@ urlpatterns = [
 	# /photos/
 	url(r'^$', views.Index , name='index'),
 
-	# /photos/register/
-	#url(r'^register/$', views.register , name='register'),
-
 	# /photos/<photo_id>
 	url(r'^(?P<pk>[0-9]+)$', views.Test.as_view(),  name='test'),
 
-	#/photos/<class_id>
-	url(r'^$', views.search , name='search'),
+	#/photos/search-results/
+	url(r'^/$', views.search , name='search'),
 
-	# /photos/
-	#url(r'^$', views.signup , name='signup'),
+	#/photos/<class_id>
+	url(r'^(?P<id>[0-9]+)/$', views.search_buttons , name='search_buttons'),
 
 ]

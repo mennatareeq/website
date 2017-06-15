@@ -16,11 +16,10 @@ from django.views.generic import View
 from django.contrib.auth.models import User
 from cart.forms import CartAddProductForm
 
-
 '''images_dir = '/home/asmaanabil/Desktop/test2/'
 modelFullPath = '/home/asmaanabil/Downloads/inception-2015-12-05/classify_image_graph_def.pb'
 indexpath = '/home/asmaanabil/Desktop/featureswaleed.csv'
-list_images = [images_dir + f for f in os.listdir(images_dir) if re.search('jpg|JPG', f)]'''
+list_images = [images_dir + f for f in os.listdir(images_dir) if re.search('jpg|JPG', f)]
 def create_graph():
 	"""Creates a graph from saved GraphDef file and returns a saver."""
 	# Creates graph from saved graph_def.pb.
@@ -49,8 +48,7 @@ def extract_features(list_images):
 			features[ind, :] = feature
 		# labels.append(re.split('_\d+',image.split('/')[1])[0])
 		return features
-		output.close()
-
+		output.close()'''
 
 
 class Test(generic.DetailView):
@@ -63,16 +61,33 @@ def Index(request):
 	return render(request,'photos/index.html',{'photos':photos,'cart_product_form': cart_product_form})
 
 
+
+def get_all_images(name):
+	related_images = ImageClass().photo_set.all()
+	empty = 1
+	for image_class in ImageClass.objects.all():
+		if image_class.class_name == name.lower():
+			empty = 0
+			related_images = image_class.photo_set.all()
+			break
+	return empty , related_images
+
 def search(request):
 	related_images = ImageClass().photo_set.all()
-	input_text = ""
+	empty = 1
 	if request.method == "POST":
-		input_text = request.POST.get("input")
-		for image_class in ImageClass.objects.all():
-			if image_class.class_name == input_text.lower() :
-				related_images = image_class.photo_set.all()
-				break
-	return render(request, 'photos/search.html' , {'input_text' : input_text , 'related_images':related_images })
+		empty , related_images = get_all_images(request.POST.get("input"))
+	return render(request, 'photos/search.html' , {'related_images':related_images ,
+												   'empty':empty , 'all_classes': ImageClass.objects.all()})
+
+def search_buttons(request , id):
+	classX = ImageClass.objects.filter(id=id).first()
+	empty , images = get_all_images(classX.class_name)
+	return render(request , 'photos/show_classX_images.html' , {'related_images':images})
+
+
+
+
 
 
 

@@ -1,34 +1,35 @@
 {% extends 'photos/base.html' %}
 
 {% block some_page_contents %}
-{% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'photos/pins.css' %}">
-<div class="container">
-<ul>
-        <!--div class="row"-->
-            {%  for photo in photos %}
-            <!--div class="col-sm-4" -->
-                <li style="display: inline">
-                    <div id="wrapper">
-                        <div id="columns">
-                            <div class="pin">
-                                <a href="{% url 'photos:test' photo.id %}" >
-                                    <img src="{{ PHOTOS_URL }}media/photos/{{ photo.name }}" class="img-responsive" style="float: left;"/>
+    {% load staticfiles %}
 
-                                    <form action="{% url 'cart:cart_add' photo.id %}" method="post">
-                                      {{ cart_product_form }}
-                                      {% csrf_token %}
-                                      <input type="submit" value="Add to cart">
-                                    </form>
+    <link rel="stylesheet" type="text/css" href="{% static 'photos/pins.css' %}">
+    <div class="container">
+        <ul>
+                <!--div class="row"-->
+                    {%  for photo in photos %}
+                    <!--div class="col-sm-4" -->
+                        <li style="display: inline">
+                            <div id="wrapper">
+                                <div id="columns">
+                                    <div class="pin">
+                                        <a href="{% url 'photos:test' photo.id %}" >
+                                            <img src="{{ PHOTOS_URL }}media/photos/{{ photo.name }}" class="img-responsive" style="float: left;"/>
 
-                                </a>
+                                            <form action="{% url 'cart:cart_add' photo.id %}" method="post">
+                                              {{ cart_product_form }}
+                                              {% csrf_token %}
+                                              <input type="submit" value="Add to cart">
+                                            </form>
+
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </li>
-            <!--/div-->
-            {% endfor %}
-        <!--/--div-->
-</ul>
-</div>
+                        </li>
+                    <!--/div-->
+                    {% endfor %}
+                <!--/--div-->
+        </ul>
+    </div>
 {% endblock %}
