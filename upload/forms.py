@@ -7,5 +7,5 @@ class ImageForm(forms.ModelForm):
     product = forms.ImageField()
 
     class Meta:
-        model = UserAccount
+        model = Image
         exclude = ('userid',)

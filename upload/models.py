@@ -5,5 +5,3 @@ class Image(models.Model):
     userid = models.ForeignKey(User)
     product = models.ImageField(upload_to='media')
 
-    def __str__(self):
-        return self.name

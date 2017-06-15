@@ -1,6 +1,12 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.contrib import admin
+from .models import Image
 
-# Register your models here.
+
+
+
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['id', 'userid','product']
+
+
+admin.site.register(Image)
