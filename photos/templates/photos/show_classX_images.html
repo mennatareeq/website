@@ -13,7 +13,7 @@
                         <div id="columns">
                             <div class="pin">
                                 <a href="{% url 'photos:test' image.id %}" >
-                                    <img src="{{ PHOTOS_URL }}media/photos/{{ image.name }}" class="img-responsive" style="float: left;"/>
+                                    <img src="{{ image.photo.url }}" class="img-responsive" style="float: left;"/>
                                     <form action="{% url 'cart:cart_add' image.id %}" method="post">
                                         {{ cart_product_form }}
                                         {% csrf_token %}

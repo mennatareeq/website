@@ -16,7 +16,8 @@ from django.views.generic import View
 from django.contrib.auth.models import User
 from cart.forms import CartAddProductForm
 
-'''images_dir = '/home/asmaanabil/Desktop/test2/'
+'''
+images_dir = '/home/asmaanabil/Desktop/test2/'
 modelFullPath = '/home/asmaanabil/Downloads/inception-2015-12-05/classify_image_graph_def.pb'
 indexpath = '/home/asmaanabil/Desktop/featureswaleed.csv'
 list_images = [images_dir + f for f in os.listdir(images_dir) if re.search('jpg|JPG', f)]
@@ -48,7 +49,8 @@ def extract_features(list_images):
 			features[ind, :] = feature
 		# labels.append(re.split('_\d+',image.split('/')[1])[0])
 		return features
-		output.close()'''
+		output.close()
+'''
 
 
 class Test(generic.DetailView):

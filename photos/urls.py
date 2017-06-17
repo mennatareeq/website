@@ -13,7 +13,7 @@ urlpatterns = [
 	url(r'^(?P<pk>[0-9]+)$', views.Test.as_view(),  name='test'),
 
 	#/photos/search-results/
-	url(r'^/$', views.search , name='search'),
+	url(r'^search-results/$', views.search , name='search'),
 
 	#/photos/<class_id>
 	url(r'^(?P<id>[0-9]+)/$', views.search_buttons , name='search_buttons'),

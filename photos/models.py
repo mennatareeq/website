@@ -12,8 +12,8 @@ class ImageClass(models.Model):
 class Photo(models.Model):
     class_name = models.ForeignKey(ImageClass, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
-    photo = models.ImageField(upload_to='./photos/media/photos/')
-    features = models.FileField(blank = True , upload_to= './photos/media/features/')
+    photo = models.ImageField(upload_to='./photos/')
+    features = models.FileField(blank = True , upload_to= './features/')
     price = models.DecimalField(max_digits=10, decimal_places=2,default = 100)
 
     def __str__(self):
