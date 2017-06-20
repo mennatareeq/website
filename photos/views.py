@@ -1,7 +1,7 @@
 from django.views import generic
 from django.shortcuts import render , redirect
 from django.views.generic.edit import CreateView , UpdateView , DeleteView
-from models import Photo , ImageClass
+from models import Photo , ImageClass , LabelsClass
 from django.http import HttpResponse
 import numpy as np
 import tensorflow as tf
@@ -63,31 +63,101 @@ def Index(request):
 	return render(request,'photos/index.html',{'photos':photos,'cart_product_form': cart_product_form})
 
 
+all_classes_names = []
+all_classes = ImageClass.objects.all()
+for classX in all_classes:
+	all_classes_names.append(classX.class_name)
 
-def get_all_images(name):
-	related_images = ImageClass().photo_set.all()
-	empty = 1
-	for image_class in ImageClass.objects.all():
-		if image_class.class_name == name.lower():
-			empty = 0
-			related_images = image_class.photo_set.all()
-			break
-	return empty , related_images
+all_labels_names = []
+all_labels = LabelsClass.objects.all()
+for label in all_labels:
+	all_labels_names.append(label.label_name)
+
+
+# def get_labels_for_classX(classX):
+# 	related_labels = []
+# 	for image_class in ImageClass.objects.all():
+# 		if image_class.class_name == classX.lower():
+# 			related_images = image_class.photo_set.all()
+# 			for image in related_images:
+# 				labels = list(image.label_name.all())
+# 				for label in labels:
+# 					related_labels.append(label)
+#
+# 	return 	list(set(related_labels))
+
+def get_all_images(name , type):
+	if type == 'class':
+		related_images = []
+		for image_class in ImageClass.objects.all():
+			if image_class.class_name == name.lower():
+				related_images = image_class.photo_set.all()
+				break
+	if type == 'label':
+		related_images = []
+		for image_label in LabelsClass.objects.all():
+			if image_label.label_name == name.lower():
+				related_images = image_label.photo_set.all()
+				break
+
+	return related_images
 
 def search(request):
-	related_images = ImageClass().photo_set.all()
+	# suggested_labels = []
+	list_for_each_word = []
+	related_images = []
 	empty = 1
 	if request.method == "POST":
-		empty , related_images = get_all_images(request.POST.get("input"))
-	return render(request, 'photos/search.html' , {'related_images':related_images ,
+		search_text = request.POST.get("input")
+		search_words = search_text.split()
+
+		for i in range(0 , len(search_words)):
+			if search_words[i] in all_labels_names:
+				empty = 0
+
+				three_words_label = search_words[i]
+				two_words_label = search_words[i]
+
+				if len(search_words) > i+3:
+					three_words_label= search_words[i]+' '+search_words[i+1]+' '+search_words[i+2]
+				elif len(search_words) > i+2 :
+					two_words_label = search_words[i]+' '+search_words[i+1]
+
+				if three_words_label in all_labels_names:
+					related_images = get_all_images(three_words_label , 'label')
+					i += 3
+				elif two_words_label in all_labels_names:
+					related_images = get_all_images(two_words_label, 'label')
+					i += 2
+				else:
+					related_images = get_all_images(search_words[i] , 'label')
+
+				if len(related_images) != 0:
+					list_for_each_word.append(related_images)
+
+			elif search_words[i] in all_classes_names:
+				empty = 0
+				# suggested_labels = get_labels_for_classX(search_words[i])
+				related_images = get_all_images(search_words[i] , 'class')
+				if len(related_images) != 0:
+					list_for_each_word.append(related_images)
+
+		if len(list_for_each_word) != 0:
+			related_images = set(list_for_each_word[0])
+			for s in list_for_each_word[1:]:
+				related_images.intersection_update(s)
+
+
+	return render(request, 'photos/search.html' , {'related_images':related_images,
 												   'empty':empty , 'all_classes': ImageClass.objects.all()})
 
 def search_buttons(request , id):
 	classX = ImageClass.objects.filter(id=id).first()
-	empty , images = get_all_images(classX.class_name)
+	images = get_all_images(classX.class_name , 'class')
 	return render(request , 'photos/show_classX_images.html' , {'related_images':images})
 
-
+# def suggested_labels_buttons(request , label_id , class_id):
+# 	return
 
 
 

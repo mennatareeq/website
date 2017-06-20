@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'photos/pins.css' %}">
     <div class="container">
+
         {% if empty == 0 %}
             <ul>
                 {% for image in related_images %}

@@ -9,8 +9,17 @@ class ImageClass(models.Model):
         return self.class_name
 
 
+class LabelsClass(models.Model):
+    label_name= models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.label_name
+
+
+
 class Photo(models.Model):
     class_name = models.ForeignKey(ImageClass, on_delete=models.CASCADE)
+    label_name = models.ManyToManyField(LabelsClass)
     name = models.CharField(max_length=255)
     photo = models.ImageField(upload_to='./photos/')
     features = models.FileField(blank = True , upload_to= './features/')
@@ -18,8 +27,5 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.name
-
-
-
 
 

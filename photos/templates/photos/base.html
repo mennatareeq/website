@@ -55,6 +55,14 @@
                 </div>
 
                 <div class="navbar-form navbar-right">
+                    {% if user.is_authenticated %}
+                        <p style="color:white;">{{ user.username }}</p>
+                    {% else %}<a href="/users/register/">
+                        <button class="btn btn-default">Signup</button></a>
+                    {% endif %}
+                </div>
+
+                <div class="navbar-form navbar-right">
                      <div class="cart">
                       {% with total_items=cart|length %}
                         {% if cart|length > 0 %}
@@ -68,14 +76,6 @@
                         {% endif %}
                       {% endwith %}
                     </div>
-                </div>
-
-                <div class="navbar-form navbar-right">
-                    {% if user.is_authenticated %}
-                        <p style="color:white;">{{ user.username }}</p>
-                    {% else %}<a href="/users/register/">
-                        <button class="btn btn-default">Signup</button></a>
-                    {% endif %}
                 </div>
 
                 <div class="navbar-form navbar-left">
